@@ -20,7 +20,7 @@ def checklog():
 
 def logIt(msg):
     file = open(LOGDIR+"/check.log","a")
-    file.write(str(msg)+" ")
+    file.write(str(msg))
     file.close()
     return
 
@@ -30,9 +30,9 @@ def reloadCore():
     status = urllib2.urlopen("http://"+SOLRHOST+SOLRCOREADM+"?action=RELOAD&wt=json&core="+SOLRCORE).read()
     status = json.loads(status)
     if status['responseHeader']['status'] is 0:
-       logIt("Reload Ok")
+       logIt("\tReload Ok")
     else:
-       logIt("RELOAD fail:"+status['responseHeader']['status'])
+       logIt("\tRELOAD fail:"+status['responseHeader']['status'])
 
     return
 
@@ -40,9 +40,9 @@ def optimizeCore():
     status = urllib2.urlopen("http://"+SOLRHOST+"/solr/"+SOLRCORE+"/update?optimize=true&waitFlush=true&wt=json").read()
     status = json.loads(status)
     if status['responseHeader']['status'] is 0:
-       logIt(" Optimize Ok ")
+       logIt("\tOptimize Ok\n")
     else:
-       logIt(" OPTIMIZE fail:"+status['responseHeader']['status'])
+       logIt("\tOPTIMIZE fail:"+status['responseHeader']['status']+"\n")
 
     return
 
@@ -65,5 +65,5 @@ def main():
 if __name__ == '__main__':
     checklog()
     main()
-    logIt("\n")
+    
 
